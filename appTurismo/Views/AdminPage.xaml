@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:appTurismo.ViewModels"
+             x:Class="appTurismo.Views.AdminPage"
+             Title="{Binding Title}">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="15">
+            <Label Text="Tus Viajes Asignados" FontSize="24" FontAttributes="Bold" HorizontalOptions="Center" />
+
+            <Button Text="+ Crear Nuevo Viaje" 
+                    Command="{Binding IrCrearViajeCommand}" 
+                    BackgroundColor="#2196F3" 
+                    TextColor="White" 
+                    HeightRequest="45" 
+                    CornerRadius="8" 
+                    Margin="0,0,0,10"/>
+
+            <CollectionView ItemsSource="{Binding ViajesActivos}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame Margin="0,8" Padding="15" CornerRadius="12" BorderColor="#4CAF50" BackgroundColor="#F9FBE7">
+                            <Grid RowDefinitions="Auto, Auto, Auto" ColumnDefinitions="*, *">
+                                <Label Grid.Row="0" Grid.ColumnSpan="2" Text="{Binding Nombre}" FontSize="18" FontAttributes="Bold" TextColor="#2E7D32" />
+                                <Label Grid.Row="1" Grid.ColumnSpan="2" Text="{Binding FechaInicio, StringFormat='Inicio: {0:dd/MM/yyyy}'}" FontSize="14" TextColor="#555" Margin="0,5,0,10" />
+
+                                <Button Grid.Row="2" Grid.Column="0" Text="🗺️ Mapa"
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.VerMapaCommand}"
+                                        CommandParameter="{Binding .}"
+                                        BackgroundColor="#FF9800" TextColor="White" HeightRequest="40" CornerRadius="8" Margin="0,0,5,0"/>
+
+                                <Button Grid.Row="2" Grid.Column="1" Text="✅ Checkpoints"
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.GestionarCheckpointsCommand}"
+                                        CommandParameter="{Binding .}"
+                                        BackgroundColor="#4CAF50" TextColor="White" HeightRequest="40" CornerRadius="8" Margin="5,0,0,0"/>
+                            </Grid>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

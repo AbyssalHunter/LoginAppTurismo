@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="appTurismo.Views.MainPage"
+             Title="Main Page">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Add" 
+                     IconImageSource="{FontImageSource Glyph='+', Color=DarkGrey, Size=22}" 
+                     Command="{Binding GoToContactDetailsCommand}" />
+    </ContentPage.ToolbarItems>
+
+    <Grid RowDefinitions="*,Auto">
+        <!-- Wrap CollectionView in RefreshView for pull-to-refresh functionality -->
+        <RefreshView Grid.Row="0"
+                     IsRefreshing="{Binding IsRefreshing, Mode=TwoWay}"
+                     Command="{Binding GetUsersCommand}">
+
+            <CollectionView 
+                SelectionMode="Single"
+                ItemsSource="{Binding Contacts}">
+
+                <CollectionView.EmptyView>
+                    <StackLayout>
+                        <Label Text="No users found" 
+                               HorizontalOptions="Center" 
+                               VerticalOptions="Center"
+                               FontSize="16"/>
+                    </StackLayout>
+                </CollectionView.EmptyView>
+
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Vertical" ItemSpacing="10" />
+                </CollectionView.ItemsLayout>
+
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Border StrokeThickness="0">
+                            <Grid ColumnDefinitions="85,*" Padding="10">
+                                <Border
+                                    StrokeShape="Ellipse"
+                                    HeightRequest="85"
+                                    WidthRequest="85"
+                                    StrokeThickness="0"
+                                    VerticalOptions="Center"
+                                    HorizontalOptions="Center"
+                                    BackgroundColor="#E1E1E1">
+                                    <Image
+                                        Aspect="AspectFill"
+                                        HeightRequest="85"
+                                        WidthRequest="85"
+                                        Source="dotnet_bot.png" />
+                                </Border>
+                                <StackLayout Padding="5" Margin="20,0,0,0" VerticalOptions="Center" Grid.Column="1">
+                                    <Label Text="{Binding Nombre}" FontSize="18" FontAttributes="Bold"/>
+                                    <Label Text="{Binding CorreoElectronico}" FontSize="14" TextColor="Gray"/>
+                                    <Label Text="{Binding Telefono}" FontSize="12" TextColor="Gray"/>
+                                </StackLayout>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </RefreshView>
+
+        <Button Text="Get Users"
+                Margin="10"
+                Grid.Row="1"
+                Command="{Binding GetUsersCommand}"
+                IsEnabled="{Binding IsNotBusy}"/>
+
+        <ActivityIndicator
+            Grid.Row="0"
+            IsVisible="{Binding IsBusy}"
+            IsRunning="{Binding IsBusy}"
+            VerticalOptions="Center"
+            HorizontalOptions="Center"/>
+    </Grid>
+</ContentPage>
