@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:mapsui="clr-namespace:Mapsui.UI.Maui;assembly=Mapsui.UI.Maui"
+             x:Class="appTurismo.Views.CrearViajePage"
+             Title="Crear y Trazar Viaje">
+
+    <Grid RowDefinitions="Auto, Auto, *, Auto" Padding="15" RowSpacing="10">
+        <Entry Grid.Row="0" Placeholder="Nombre del Viaje (Ej. Ruta Volcán)" Text="{Binding NombrePaquete}" FontSize="18" FontAttributes="Bold" />
+        <Label Grid.Row="1" Text="Mueve el mapa al lugar deseado y presiona 'Agregar':" FontSize="14" TextColor="#555" />
+
+        <Grid Grid.Row="2" IsClippedToBounds="True">
+
+            <mapsui:MapView x:Name="mapView" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" />
+
+            <Label Text="📍" FontSize="45" HorizontalOptions="Center" VerticalOptions="Center" TranslationY="-20" InputTransparent="True" />
+
+            <Button Text="➕ Agregar Checkpoint Aquí" 
+                    Clicked="BtnAgregarCentro_Clicked"
+                    HorizontalOptions="Center" VerticalOptions="End" Margin="0,0,0,20"
+                    BackgroundColor="#2196F3" TextColor="White" CornerRadius="20" HeightRequest="45" Padding="20,0" FontAttributes="Bold"/>
+        </Grid>
+
+        <Button Grid.Row="3" Text="💾 Guardar Viaje Completo" Command="{Binding GuardarViajeCommand}" BackgroundColor="#4CAF50" TextColor="White" HeightRequest="50" CornerRadius="8"/>
+    </Grid>
+</ContentPage>
